@@ -1,6 +1,7 @@
 package com.danlewis;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /*
  * Hangman logic
@@ -20,44 +21,49 @@ import java.util.*;
  */
 
 public class MainGame {
-    // Keep track of the current state of the game
-    public enum GameState{
-        GUESSING,
-        WON,
-        LOST
-    }
     // Number of errors allowed and current number of errors
     public static final int MAX_ERRORS = 6;
-    public static int numberOfErrors;
+    public static int numberOfErrors = 0;
 
     // A set for guessed letters
     public static Set<String> guessedLetters = new HashSet<>();
+
+    // List of game boards (hangman images) --> UIManager.readFile(gameBoards.get(index)
+    static List<String> gameBoards = FileUtils.gameBoardPaths.stream().map(String::toString).collect(Collectors.toList());
 
     // Bool for state of game
     public static boolean gameOver = false;
 
     public static void main(String[] args) {
+
         // Get word
         String word = Words.getWord();
-        System.out.println(word);
 
         // Hide word
         StringBuilder hiddenWord = new StringBuilder();
         for (int i = 0; i < word.length(); i++) {
             hiddenWord.append("-");
         }
-        System.out.println(hiddenWord);
 
-        // Split word into array
-        String[] letters = word.split("");
-
+        // newHiddenWord contains the dynamic word display
         StringBuilder newHiddenWord;
+        newHiddenWord = new StringBuilder(hiddenWord);
         do {
+            //
+            System.out.printf("Your word:\n %s\n", newHiddenWord);
+            System.out.println(word);
+            System.out.println(UIManager.readFile(gameBoards.get(numberOfErrors)));
+            System.out.printf("Guessed letters: %s\n\n", guessedLetters.toString());
+
             Scanner input = new Scanner(System.in);
             System.out.println("Guess a letter: ");
             String letter = input.nextLine();
+            System.out.println();
 
-            newHiddenWord = new StringBuilder(hiddenWord);
+            if(guessedLetters.contains(letter.substring(0,1))){
+                System.out.printf("Letter has been guessed\n\n");
+                continue;
+            }
 
             // Check for the letter in the word,
             // if it's there, replace it
@@ -65,12 +71,30 @@ public class MainGame {
                 if (letter.charAt(0) == word.charAt(i)) {
                     newHiddenWord.setCharAt(i, letter.charAt(0));
                     guessedLetters.add(String.valueOf(letter.charAt(0)));
+                }
+            }
+
+            if(!word.contains(letter)){
+                guessedLetters.add(String.valueOf(letter.charAt(0)));
+                numberOfErrors++;
+                if(numberOfErrors == MAX_ERRORS){
+                    System.out.println("You Lose!");
+                    System.out.println(UIManager.readFile(gameBoards.get(numberOfErrors)));
                     gameOver = true;
                 }
             }
-        } while (!gameOver);
 
-        System.out.println(newHiddenWord);
-        System.out.println(guessedLetters.toString());
+            if(word.compareTo(newHiddenWord.toString()) == 0){
+                System.out.println("You Win!");
+                System.out.printf("Your word was: %s\n", newHiddenWord);
+                gameOver = true;
+            }
+
+        } while (!gameOver);
+//
+//        System.out.println(newHiddenWord);
+//        System.out.printf("Guessed Letters: %s\n", guessedLetters.toString());
+//        System.out.println(numberOfErrors);
+//        System.out.println(UIManager.readFile(gameBoards.get(numberOfErrors)));
     }
 }
