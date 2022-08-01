@@ -32,7 +32,7 @@ public class MainGame {
     // List of game boards (hangman images) --> UIManager.readFile(gameBoards.get(index)
     static List<String> gameBoards = FileUtils.gameBoardPaths.stream().map(String::toString).collect(Collectors.toList());
 
-    public static void main() {
+    public static void main(String[] args) {
         Player player = new Player();
         Scanner getUserName = new Scanner(System.in);
         System.out.println("Enter Name: ");
@@ -52,8 +52,7 @@ public class MainGame {
         StringBuilder newHiddenWord;
         newHiddenWord = new StringBuilder(hiddenWord);
         do {
-            System.out.printf("Player: %s", player.getName());
-            System.out.println();
+            System.out.printf("Player: %s\n\n", player.getName());
             System.out.printf("Your word:\n %s\n", newHiddenWord);
             System.out.println(word);
             System.out.println(UIManager.readFile(gameBoards.get(numberOfErrors)));
