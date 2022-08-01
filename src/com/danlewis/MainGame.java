@@ -27,14 +27,17 @@ public class MainGame {
 
     // A set for guessed letters
     public static Set<String> guessedLetters = new HashSet<>();
-
+    // Bool for state of game
+    public static boolean gameOver = false;
     // List of game boards (hangman images) --> UIManager.readFile(gameBoards.get(index)
     static List<String> gameBoards = FileUtils.gameBoardPaths.stream().map(String::toString).collect(Collectors.toList());
 
-    // Bool for state of game
-    public static boolean gameOver = false;
-
-    public static void main(String[] args) {
+    public static void main() {
+        Player player = new Player();
+        Scanner getUserName = new Scanner(System.in);
+        System.out.println("Enter Name: ");
+        player.setName(getUserName.nextLine());
+        System.out.println();
 
         // Get word
         String word = Words.getWord();
@@ -49,7 +52,8 @@ public class MainGame {
         StringBuilder newHiddenWord;
         newHiddenWord = new StringBuilder(hiddenWord);
         do {
-            //
+            System.out.printf("Player: %s", player.getName());
+            System.out.println();
             System.out.printf("Your word:\n %s\n", newHiddenWord);
             System.out.println(word);
             System.out.println(UIManager.readFile(gameBoards.get(numberOfErrors)));
@@ -60,7 +64,9 @@ public class MainGame {
             String letter = input.nextLine();
             System.out.println();
 
-            if(guessedLetters.contains(letter.substring(0,1))){
+            String forcedLowerCase = String.valueOf(letter.charAt(0)).toLowerCase(Locale.ROOT);
+
+            if (guessedLetters.contains(forcedLowerCase)) {
                 System.out.printf("Letter has been guessed\n\n");
                 continue;
             }
@@ -70,31 +76,28 @@ public class MainGame {
             for (int i = 0; i < word.length(); i++) {
                 if (letter.charAt(0) == word.charAt(i)) {
                     newHiddenWord.setCharAt(i, letter.charAt(0));
-                    guessedLetters.add(String.valueOf(letter.charAt(0)));
+                    guessedLetters.add(forcedLowerCase);
                 }
             }
 
-            if(!word.contains(letter)){
-                guessedLetters.add(String.valueOf(letter.charAt(0)));
+            if (!word.contains(letter)) {
+                guessedLetters.add(forcedLowerCase);
                 numberOfErrors++;
-                if(numberOfErrors == MAX_ERRORS){
+                if (numberOfErrors == MAX_ERRORS) {
                     System.out.println("You Lose!");
                     System.out.println(UIManager.readFile(gameBoards.get(numberOfErrors)));
+                    System.out.printf("Your word was: %s\n", word);
                     gameOver = true;
                 }
             }
 
-            if(word.compareTo(newHiddenWord.toString()) == 0){
-                System.out.println("You Win!");
+            if (word.compareTo(newHiddenWord.toString()) == 0) {
+                System.out.println("You Won!");
+                System.out.println(UIManager.readFile(gameBoards.get(gameBoards.size()-1)));
                 System.out.printf("Your word was: %s\n", newHiddenWord);
                 gameOver = true;
             }
 
         } while (!gameOver);
-//
-//        System.out.println(newHiddenWord);
-//        System.out.printf("Guessed Letters: %s\n", guessedLetters.toString());
-//        System.out.println(numberOfErrors);
-//        System.out.println(UIManager.readFile(gameBoards.get(numberOfErrors)));
     }
 }

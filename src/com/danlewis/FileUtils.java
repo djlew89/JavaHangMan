@@ -20,6 +20,8 @@ public class FileUtils {
 
     public static final String BOARD_SIX = GAME_BOARD_PATH + "WrongGuessSix.txt";
 
+    public static final String BOARD_WIN = GAME_BOARD_PATH + "WinningState.txt";
+
     public static final ArrayList<String> gameBoardPaths = new ArrayList<>(
-            Arrays.asList(BOARD_EMPTY, BOARD_ONE, BOARD_TWO, BOARD_THREE, BOARD_FOUR, BOARD_FIVE, BOARD_SIX));
+            Arrays.asList(BOARD_EMPTY, BOARD_ONE, BOARD_TWO, BOARD_THREE, BOARD_FOUR, BOARD_FIVE, BOARD_SIX, BOARD_WIN));
 }
