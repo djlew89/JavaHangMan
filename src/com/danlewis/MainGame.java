@@ -35,9 +35,18 @@ public class MainGame {
     public static void main(String[] args) {
         Player player = new Player();
         Scanner getUserName = new Scanner(System.in);
-        System.out.println("Enter Name: ");
-        player.setName(getUserName.nextLine());
-        System.out.println();
+
+        // Validate the player name
+        boolean isValid = false;
+        do {
+            System.out.println("Enter Name: ");
+            String name = getUserName.nextLine();
+            if (Validator.isValidName(name)) {
+                player.setName(name);
+                isValid = true;
+            }
+            System.out.println();
+        } while (!isValid);
 
         // Get word
         String word = Words.getWord();
@@ -63,10 +72,16 @@ public class MainGame {
             String letter = input.nextLine();
             System.out.println();
 
+            // Validate the guess
+            if (!Validator.isValidGuess(letter)) {
+                System.out.printf("Please guess a letter\n\n");
+                continue;
+            }
+
             String forcedLowerCase = String.valueOf(letter.charAt(0)).toLowerCase(Locale.ROOT);
 
             if (guessedLetters.contains(forcedLowerCase)) {
-                System.out.printf("Letter has been guessed\n\n");
+                System.out.printf("The letter \"%s\" has been guessed\n\n", forcedLowerCase);
                 continue;
             }
 
@@ -91,8 +106,8 @@ public class MainGame {
             }
 
             if (word.compareTo(newHiddenWord.toString()) == 0) {
-                System.out.println("You Won!");
-                System.out.println(UIManager.readFile(gameBoards.get(gameBoards.size()-1)));
+                System.out.printf("Congrats, %s! You Won!\n", player.getName());
+                System.out.println(UIManager.readFile(gameBoards.get(gameBoards.size() - 1)));
                 System.out.printf("Your word was: %s\n", newHiddenWord);
                 gameOver = true;
             }
