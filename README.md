@@ -6,6 +6,7 @@ Hangman logic:
 Get a word and hide it.
 Split the word into an array.
 get the player to guess a letter:
+
 a) if the letter is in the array
        show the letter and add it to the guessed letters set
 
