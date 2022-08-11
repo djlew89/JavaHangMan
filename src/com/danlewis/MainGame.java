@@ -32,7 +32,7 @@ public class MainGame {
     // List of game boards (hangman images) --> UIManager.readFile(gameBoards.get(index)
     static List<String> gameBoards = FileUtils.gameBoardPaths.stream().map(String::toString).collect(Collectors.toList());
 
-    public static void main(String[] args) {
+    public static void runGame() {
         Player player = new Player();
         Scanner getUserName = new Scanner(System.in);
 
@@ -41,7 +41,8 @@ public class MainGame {
         do {
             System.out.println("Enter Name: ");
             String name = getUserName.nextLine();
-            if (Validator.isValidName(name)) {
+
+        if (Validator.isValidName(name)) {
                 player.setName(name);
                 isValid = true;
             }
@@ -63,7 +64,10 @@ public class MainGame {
         do {
             System.out.printf("Player: %s\n\n", player.getName());
             System.out.printf("Your word:\n %s\n", newHiddenWord);
-            System.out.println(word);
+
+//            Show word for debugging
+//            System.out.println(word);
+
             System.out.println(UIManager.readFile(gameBoards.get(numberOfErrors)));
             System.out.printf("Guessed letters: %s\n\n", guessedLetters.toString());
 
@@ -78,8 +82,8 @@ public class MainGame {
                 continue;
             }
 
+            // Keep it lowercase
             String forcedLowerCase = String.valueOf(letter.charAt(0)).toLowerCase(Locale.ROOT);
-
             if (guessedLetters.contains(forcedLowerCase)) {
                 System.out.printf("The letter \"%s\" has been guessed\n\n", forcedLowerCase);
                 continue;
@@ -94,6 +98,7 @@ public class MainGame {
                 }
             }
 
+            // Incorrect guess handler
             if (!word.contains(letter)) {
                 guessedLetters.add(forcedLowerCase);
                 numberOfErrors++;
@@ -105,10 +110,15 @@ public class MainGame {
                 }
             }
 
+            // Bit of an issue comparing a String to a StringBuilder, so
+            // I'm checking it lexicographically.
+
+            // Include check if user wants to play again
             if (word.compareTo(newHiddenWord.toString()) == 0) {
                 System.out.printf("Congrats, %s! You Won!\n", player.getName());
                 System.out.println(UIManager.readFile(gameBoards.get(gameBoards.size() - 1)));
                 System.out.printf("Your word was: %s\n", newHiddenWord);
+//                System.out.println("Do you want to play again?: ");
                 gameOver = true;
             }
 

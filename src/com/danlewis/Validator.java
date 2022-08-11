@@ -8,7 +8,6 @@ public class Validator {
     }
 
     public static boolean isValidName(String playerName) {
-//        String regex = "/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/gm";
         String regex = "[A-Za-z]+|[A-Za-z]*\\s[A-Za-z]+";
         Pattern p = Pattern.compile(regex);
         if (playerName == null) return false;
@@ -16,6 +15,7 @@ public class Validator {
         return m.matches();
     }
 
+    // Overkill but worth it
     public static boolean isValidGuess(String guess) {
         String regex = "[A-Za-z]";
         Pattern p = Pattern.compile(regex);
@@ -24,15 +24,15 @@ public class Validator {
         return m.matches();
     }
 
-    public static void main(String[] args) {
-        String name1 = "Dan";
-        String name2 = "";
-        String name3 = ".;;";
-        String name4 = "Dan Lewis";
-
-        System.out.println(isValidName(name1));
-        System.out.println(isValidName(name2));
-        System.out.println(isValidName(name3));
-        System.out.println(isValidName(name4));
-    }
+//    public static void main(String[] args) {
+//        String name1 = "Dan";
+//        String name2 = "";
+//        String name3 = ".;;";
+//        String name4 = "Dan Lewis";
+//
+//        System.out.println(isValidName(name1));
+//        System.out.println(isValidName(name2));
+//        System.out.println(isValidName(name3));
+//        System.out.println(isValidName(name4));
+//    }
 }
