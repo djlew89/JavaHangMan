@@ -14,4 +14,3 @@ b) if it is not in the array
       show the letter, increment the guess counter and hangman UI, then add it to the guessed letters set
 
 This loop continues until the player has guessed the word or has hanged the man
-An enum will be used to check the state of the game
