@@ -51,6 +51,7 @@ public class MainGame {
 
         // Get word
         String word = Words.getWord();
+//        System.out.println(word);
 
         // Hide word
         StringBuilder hiddenWord = new StringBuilder();
@@ -64,6 +65,8 @@ public class MainGame {
         do {
             System.out.printf("Player: %s\n\n", player.getName());
             System.out.printf("Your word:\n %s\n", newHiddenWord);
+            System.out.println();
+            System.out.println();
 
 //            Show word for debugging
 //            System.out.println(word);
@@ -103,7 +106,9 @@ public class MainGame {
                 guessedLetters.add(forcedLowerCase);
                 numberOfErrors++;
                 if (numberOfErrors == MAX_ERRORS) {
-                    System.out.println("You Lose!");
+                    System.out.printf("You lose, %s!\n", player.getName());
+                    System.out.println();
+                    System.out.println();
                     System.out.println(UIManager.readFile(gameBoards.get(numberOfErrors)));
                     System.out.printf("Your word was: %s\n", word);
                     gameOver = true;
@@ -116,6 +121,8 @@ public class MainGame {
             // Include check if user wants to play again
             if (word.compareTo(newHiddenWord.toString()) == 0) {
                 System.out.printf("Congrats, %s! You Won!\n", player.getName());
+                System.out.println();
+                System.out.println();
                 System.out.println(UIManager.readFile(gameBoards.get(gameBoards.size() - 1)));
                 System.out.printf("Your word was: %s\n", newHiddenWord);
 //                System.out.println("Do you want to play again?: ");

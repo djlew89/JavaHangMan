@@ -10,14 +10,6 @@ import java.util.Scanner;
 public class Words {
     // At the start of the game, read words into a list and pick one at random and return it
     private static ArrayList<String> getWordsList(){
-//        Path p = Paths.get("Words.txt");
-//        File wordsText = new File(String.valueOf(p));
-//        Scanner file = null;
-//        try {
-//            file = new Scanner(wordsText);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
         ArrayList<String> wordsList = new ArrayList<>();
         try {
 
@@ -41,15 +33,6 @@ public class Words {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-//        if (file != null) {
-//            while (file.hasNext()) {
-//                wordsList.add(file.next());
-//            }
-//        }
-//        file.close();
         return wordsList;
     }
 

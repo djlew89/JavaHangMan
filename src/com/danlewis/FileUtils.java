@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FileUtils {
-    public static final String GAME_BOARD_PATH = "./src/UIStates/";
+    public static final String GAME_BOARD_PATH = "C:\\Java Projects\\JavaHangMan\\UIStates\\";
 
     public static final String BOARD_EMPTY = GAME_BOARD_PATH + "InitialState.txt";
 
