@@ -4,30 +4,29 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class UIManager {
-    public static String readFile(String filename){
+    public static String readFile(String filename) {
 
-            StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         try {
 
-            FileInputStream si = new FileInputStream(filename);
-            InputStreamReader isr = new InputStreamReader( si, StandardCharsets.UTF_8);
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
 
-            BufferedReader br = new BufferedReader( isr );
-            String line = br.readLine();
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line = "";
 
-            while( line != null )
-            {
+            while (line != null) {
                 // process lines of text
 
-                line = br.readLine();
-                if(line != null){
+                line = bufferedReader.readLine();
+                if (line != null) {
                     builder.append(line).append("\n");
                 }
             }
 
-            br.close();
-            isr.close();
-            si.close();
+            bufferedReader.close();
+            inputStreamReader.close();
+            fileInputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -35,4 +34,11 @@ public class UIManager {
         }
         return builder.toString();
     }
+
+    public void clearScreen(){
+        for(int i=0; i < 20; i++){
+            System.out.println();
+        }
+    }
+
 }

@@ -16,23 +16,12 @@ public class Validator {
     }
 
     // Overkill but worth it
-    public static boolean isValidGuess(String guess) {
+    public static boolean isValidGuess(char guess) {
         String regex = "[A-Za-z]";
         Pattern p = Pattern.compile(regex);
-        if (guess == null) return false;
-        Matcher m = p.matcher(guess);
+
+        Matcher m = p.matcher(String.valueOf(guess));
         return m.matches();
     }
 
-//    public static void main(String[] args) {
-//        String name1 = "Dan";
-//        String name2 = "";
-//        String name3 = ".;;";
-//        String name4 = "Dan Lewis";
-//
-//        System.out.println(isValidName(name1));
-//        System.out.println(isValidName(name2));
-//        System.out.println(isValidName(name3));
-//        System.out.println(isValidName(name4));
-//    }
 }
