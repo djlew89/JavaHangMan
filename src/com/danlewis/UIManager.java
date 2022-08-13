@@ -2,6 +2,8 @@ package com.danlewis;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Set;
 
 public class UIManager {
     public static String readFile(String filename) {
@@ -33,6 +35,14 @@ public class UIManager {
             e.printStackTrace();
         }
         return builder.toString();
+    }
+    public static void displayHUD(Player player, StringBuilder hiddenWord,
+                                  List<String> gameBoards, int incorrectGuesses, Set<Character> guessedLetters) {
+        System.out.printf("Player: %s\n\n", player.getName());
+        System.out.printf("Your word:\n %s\n", hiddenWord);
+
+        System.out.println(UIManager.readFile(gameBoards.get(incorrectGuesses)));
+        System.out.printf("Guessed letters: %s\n\n", guessedLetters.toString());
     }
 
     public void clearScreen(){

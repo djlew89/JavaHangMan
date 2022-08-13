@@ -4,6 +4,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FileUtils {
+
+    private static final String GAME_MUSIC_PATH = "Sfx\\";
+
+    public static final String BACKGROUND_MUSIC = GAME_MUSIC_PATH + "Background.wav";
+
+    public static final String GAME_WON_MUSIC = GAME_MUSIC_PATH + "Won.wav";
+
+    public static final String GAME_LOST_MUSIC = GAME_MUSIC_PATH + "GameOver.wav";
+
+
     public static final String GAME_BOARD_PATH = "UIStates\\";
 
     public static final String BOARD_EMPTY = GAME_BOARD_PATH + "InitialState.txt";

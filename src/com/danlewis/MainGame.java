@@ -26,20 +26,23 @@ public class MainGame {
     public static Set<Character> guessedLetters = new HashSet<>();
     static List<String> gameBoards = FileUtils.gameBoardPaths;
     private final Scanner scanner;
-    private StringBuilder hiddenWord;
     private final UIManager uiManager;
+    private StringBuilder hiddenWord;
     private GameState gameState;
     private Player player;
     private String word;
+    private SfxManager sfxManager;
 
     public MainGame() {
         uiManager = new UIManager();
         scanner = new Scanner(System.in);
         hiddenWord = new StringBuilder();
+        sfxManager = new SfxManager();
         gameState = GameState.SETUP;
     }
 
     private void setUp() {
+        sfxManager.playAudio(Music.BACKGROUND);
         createPlayer();
         createHiddenWord();
         gameState = GameState.RUNNING;
@@ -49,15 +52,10 @@ public class MainGame {
         setUp();
 
         do {
-            if(gameState == GameState.SETUP){
+            if (gameState == GameState.SETUP) {
                 restartGame();
             }
-            System.out.println(word);
-            System.out.printf("Player: %s\n\n", player.getName());
-            System.out.printf("Your word:\n %s\n", hiddenWord);
-
-            System.out.println(UIManager.readFile(gameBoards.get(incorrectGuesses)));
-            System.out.printf("Guessed letters: %s\n\n", guessedLetters.toString());
+            UIManager.displayHUD(player, hiddenWord, gameBoards, incorrectGuesses, guessedLetters);
 
             System.out.println("Guess a letter: ");
             char letter = scanner.nextLine().toLowerCase(Locale.ROOT).charAt(0);
@@ -90,22 +88,27 @@ public class MainGame {
         } while (gameState != GameState.QUIT);
     }
 
+
     private void restartGame() {
+        sfxManager.stopAudio(Music.BACKGROUND);
         incorrectGuesses = 0;
         guessedLetters.clear();
         uiManager.clearScreen();
         createHiddenWord();
         gameState = GameState.RUNNING;
+        sfxManager.playAudio(Music.BACKGROUND);
     }
 
     private void checkForGameOver() {
-        if (word.compareTo(hiddenWord.toString()) == 0) {
+        if (isWinner()) {
+            sfxManager.playAudio(Music.WON);
             System.out.printf("Congrats, %s! You Won!\n", player.getName());
             System.out.println(UIManager.readFile(gameBoards.get(gameBoards.size() - 1)));
             System.out.printf("Your word was: %s\n", hiddenWord);
             checkForPlayAgain();
         }
         if (incorrectGuesses == MAX_ERRORS) {
+            sfxManager.playAudio(Music.LOST);
             System.out.printf("You lose, %s!\n", player.getName());
             System.out.println(UIManager.readFile(gameBoards.get(incorrectGuesses)));
             System.out.printf("Your word was: %s\n", word);
@@ -113,11 +116,15 @@ public class MainGame {
         }
     }
 
+    private boolean isWinner() {
+        return word.compareTo(hiddenWord.toString()) == 0;
+    }
+
     private void checkForPlayAgain() {
         System.out.println("Would you like to try again? Y/N");
-        if(scanner.nextLine().equalsIgnoreCase("Y")){
+        if (scanner.nextLine().equalsIgnoreCase("Y")) {
             gameState = GameState.SETUP;
-        }else gameState = GameState.QUIT;
+        } else gameState = GameState.QUIT;
     }
 
     private void createHiddenWord() {
@@ -131,7 +138,6 @@ public class MainGame {
     private void createPlayer() {
         player = new Player();
         Scanner getUserName = new Scanner(System.in);
-        // Validate the player name
         boolean isValid = false;
         do {
             System.out.println("Enter Name: ");
