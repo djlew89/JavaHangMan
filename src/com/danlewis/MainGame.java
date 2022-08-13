@@ -38,7 +38,6 @@ public class MainGame {
             if (gameState == GameState.SETUP) {
                 restartGame();
             }
-            System.out.println(word);
             UIManager.displayHUD(player, hiddenWord, gameBoards, incorrectGuesses, guessedLetters);
 
             System.out.println("Guess a letter: ");
