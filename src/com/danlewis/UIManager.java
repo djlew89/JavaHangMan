@@ -18,8 +18,6 @@ public class UIManager {
             String line = "";
 
             while (line != null) {
-                // process lines of text
-
                 line = bufferedReader.readLine();
                 if (line != null) {
                     builder.append(line).append("\n");
@@ -29,13 +27,12 @@ public class UIManager {
             bufferedReader.close();
             inputStreamReader.close();
             fileInputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return builder.toString();
     }
+
     public static void displayHUD(Player player, StringBuilder hiddenWord,
                                   List<String> gameBoards, int incorrectGuesses, Set<Character> guessedLetters) {
         System.out.printf("Player: %s\n\n", player.getName());
@@ -45,8 +42,8 @@ public class UIManager {
         System.out.printf("Guessed letters: %s\n\n", guessedLetters.toString());
     }
 
-    public void clearScreen(){
-        for(int i=0; i < 20; i++){
+    public void clearScreen() {
+        for (int i = 0; i < 20; i++) {
             System.out.println();
         }
     }

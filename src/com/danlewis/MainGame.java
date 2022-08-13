@@ -2,23 +2,6 @@ package com.danlewis;
 
 import java.util.*;
 
-/*
- * Hangman logic
- *
- * Get a word and hide it.
- * Split the word into an array.
- * get the player to guess a letter:
- * a) if the letter is in the array
- *       show the letter and add it to the guessed letters set
- *
- * b) if it is not in the array
- *       show the letter, increment the guess counter and hangman UI, then add it to the guessed letters set
- *
- * This loop continues until the player has guessed the word or has hanged the man
- * A bool will be used to check the state of the game
- *
- */
-
 public class MainGame {
 
     public static final int MAX_ERRORS = 6;
@@ -55,22 +38,25 @@ public class MainGame {
             if (gameState == GameState.SETUP) {
                 restartGame();
             }
+            System.out.println(word);
             UIManager.displayHUD(player, hiddenWord, gameBoards, incorrectGuesses, guessedLetters);
 
             System.out.println("Guess a letter: ");
-            char letter = scanner.nextLine().toLowerCase(Locale.ROOT).charAt(0);
+            String unvalidatedGuess = scanner.nextLine().toLowerCase();
+
             System.out.println();
 
-            if (!Validator.isValidGuess(letter)) {
+            if (!Validator.isValidGuess(unvalidatedGuess)) {
                 System.out.println("Please guess a letter");
                 continue;
             }
+
+            char letter = unvalidatedGuess.charAt(0);
 
             if (guessedLetters.contains(letter)) {
                 System.out.printf("The letter \"%s\" has been guessed\n\n", letter);
                 continue;
             }
-
 
             for (int i = 0; i < word.length(); i++) {
                 if (letter == word.charAt(i)) {
@@ -90,16 +76,15 @@ public class MainGame {
 
 
     private void restartGame() {
-        sfxManager.stopAudio(Music.BACKGROUND);
         incorrectGuesses = 0;
         guessedLetters.clear();
         uiManager.clearScreen();
         createHiddenWord();
         gameState = GameState.RUNNING;
-        sfxManager.playAudio(Music.BACKGROUND);
     }
 
     private void checkForGameOver() {
+        sfxManager = new SfxManager();
         if (isWinner()) {
             sfxManager.playAudio(Music.WON);
             System.out.printf("Congrats, %s! You Won!\n", player.getName());
@@ -107,13 +92,18 @@ public class MainGame {
             System.out.printf("Your word was: %s\n", hiddenWord);
             checkForPlayAgain();
         }
-        if (incorrectGuesses == MAX_ERRORS) {
+        if (isLoser()) {
+            sfxManager.stopAudio(Music.BACKGROUND);
             sfxManager.playAudio(Music.LOST);
             System.out.printf("You lose, %s!\n", player.getName());
             System.out.println(UIManager.readFile(gameBoards.get(incorrectGuesses)));
             System.out.printf("Your word was: %s\n", word);
             checkForPlayAgain();
         }
+    }
+
+    private boolean isLoser() {
+        return incorrectGuesses == MAX_ERRORS;
     }
 
     private boolean isWinner() {

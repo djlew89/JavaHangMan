@@ -22,6 +22,12 @@ public class SfxManager {
             case BACKGROUND:
                 backgroundMusicClip.stop();
                 break;
+            case WON:
+                gameWonMusicClip.stop();
+                break;
+            case LOST:
+                gameLostMusicClip.stop();
+                break;
             default:
                 System.out.printf("Invalid %s\n\n", music);
         }
