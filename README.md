@@ -2,15 +2,5 @@
 Hangman in Java
 
 Hangman logic:
-
-Get a word and hide it.
-Split the word into an array.
-get the player to guess a letter:
-
-a) if the letter is in the array
-       show the letter and add it to the guessed letters set
-
-b) if it is not in the array
-      show the letter, increment the guess counter and hangman UI, then add it to the guessed letters set
-
-This loop continues until the player has guessed the word or has hanged the man
+Get a word, hide a word, let the user rock out to the word.
+Enjoy some ascii Hangman.
