@@ -15,7 +15,6 @@ public class Validator {
         return m.matches();
     }
 
-    // Overkill but worth it
     public static boolean isValidGuess(String guess) {
         String regex = "[A-Za-z]";
         Pattern p = Pattern.compile(regex);

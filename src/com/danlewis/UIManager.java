@@ -35,6 +35,7 @@ public class UIManager {
 
     public static void displayHUD(Player player, StringBuilder hiddenWord,
                                   List<String> gameBoards, int incorrectGuesses, Set<Character> guessedLetters) {
+
         System.out.printf("Player: %s\n\n", player.getName());
         System.out.printf("Your word:\n %s\n", hiddenWord);
 

@@ -92,7 +92,6 @@ public class MainGame {
             checkForPlayAgain();
         }
         if (isLoser()) {
-            sfxManager.stopAudio(Music.BACKGROUND);
             sfxManager.playAudio(Music.LOST);
             System.out.printf("You lose, %s!\n", player.getName());
             System.out.println(UIManager.readFile(gameBoards.get(incorrectGuesses)));

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Words {
-    // At the start of the game, read words into a list and pick one at random and return it
     private static ArrayList<String> getWordsList() {
         ArrayList<String> wordsList = new ArrayList<>();
         try {
@@ -16,7 +15,6 @@ public class Words {
             String line = bufferedReader.readLine();
 
             while (line != null) {
-                // process lines of text
 
                 line = bufferedReader.readLine();
                 wordsList.add(line);
@@ -24,8 +22,6 @@ public class Words {
 
             bufferedReader.close();
             inputStreamReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
